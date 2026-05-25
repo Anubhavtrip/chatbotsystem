@@ -1,0 +1,131 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-chat-bg: #0f0f12;
+  --color-chat-surface: #18181b;
+  --color-chat-surface-elevated: #27272a;
+  --color-chat-border: #3f3f46;
+  --color-chat-primary: #6366f1;
+  --color-chat-primary-hover: #818cf8;
+  --color-chat-user: #6366f1;
+  --color-chat-bot: #27272a;
+  --color-chat-text: #fafafa;
+  --color-chat-muted: #a1a1aa;
+  --color-chat-success: #22c55e;
+  --color-chat-error: #ef4444;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family:
+      'Inter',
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      sans-serif;
+    background-color: var(--color-chat-bg);
+    color: var(--color-chat-text);
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-chat-border) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--color-chat-border);
+    border-radius: 9999px;
+  }
+
+  .chat-widget-enter {
+    animation: chat-widget-enter 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .chat-widget-exit {
+    animation: chat-widget-exit 0.2s cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+
+  .chat-button-pulse {
+    animation: chat-button-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes chat-widget-enter {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes chat-widget-exit {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(12px) scale(0.96);
+    }
+  }
+
+  @keyframes chat-button-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 12px rgba(99, 102, 241, 0);
+    }
+  }
+
+  @keyframes typing-bounce {
+    0%,
+    60%,
+    100% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-4px);
+    }
+  }
+
+  .typing-dot {
+    animation: typing-bounce 1.2s ease-in-out infinite;
+  }
+
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+}
