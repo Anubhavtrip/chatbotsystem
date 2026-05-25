@@ -1,0 +1,62 @@
+{
+  "brandId": "REPLACE_WITH_BRAND_OBJECT_ID",
+  "name": "Default Product Assistant",
+  "description": "Intent-based flow for product inquiries",
+  "entryNodeId": "input-1",
+  "nodes": [
+    {
+      "id": "input-1",
+      "type": "input",
+      "label": "User Input",
+      "next": ["intent-1"]
+    },
+    {
+      "id": "intent-1",
+      "type": "intent",
+      "label": "Detect Intent",
+      "config": {
+        "defaultIntent": "general",
+        "intents": [
+          {
+            "name": "product_inquiry",
+            "keywords": ["shoe", "product", "price", "buy", "recommend"]
+          }
+        ],
+        "routing": {
+          "product_inquiry": "memory-1",
+          "general": "memory-1"
+        }
+      },
+      "next": ["memory-1"]
+    },
+    {
+      "id": "memory-1",
+      "type": "memory",
+      "label": "Conversation Memory",
+      "config": { "limit": 10 },
+      "next": ["prompt-1"]
+    },
+    {
+      "id": "prompt-1",
+      "type": "prompt",
+      "label": "Build Prompt",
+      "config": {
+        "template": "{{systemPrompt}}\n\nHistory:\n{{memory}}\n\nUser: {{input}}\nIntent: {{intent}}"
+      },
+      "next": ["ai-1"]
+    },
+    {
+      "id": "ai-1",
+      "type": "ai",
+      "label": "AI Response",
+      "config": { "provider": "mock" },
+      "next": ["response-1"]
+    },
+    {
+      "id": "response-1",
+      "type": "response",
+      "label": "Format Response",
+      "config": { "template": "{{aiResponse}}" }
+    }
+  ]
+}
